@@ -1,2 +1,2 @@
-web: gunicorn flaskr:app
+web: python flaskr.py
 
