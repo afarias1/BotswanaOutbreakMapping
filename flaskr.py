@@ -9,7 +9,7 @@
     :copyright: (c) 2010 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
 """
-
+import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -26,7 +26,7 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='default'
 ))
-app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+#app.config.from_envvar('FLASKR_SETTINGS', silent=True)#
 
 
 def connect_db():
@@ -105,4 +105,5 @@ def logout():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host="0.0.0.0")
+    port = int(os.environ.get("PORT", 80))
+    app.run(host='0.0.0.0', port=port)
