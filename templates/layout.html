@@ -61,6 +61,7 @@
 	position:relative;
 	top:1px;
 }</style>
+<script src ="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
     <script type="text/javascript" 
@@ -75,14 +76,8 @@ function createMarker(latlng, name, html) {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        zIndex: Math.round(latlng.lat()*-100000)<<5
+        title:contentString
         });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(contentString); 
-        infowindow.open(map,marker);
-        });
-    google.maps.event.trigger(marker, 'click');    
     return marker;
 }
 
@@ -119,6 +114,7 @@ function createMarker(latlng, name, html) {
 
         /* Create a new Map for the application */
         map = new google.maps.Map(document.getElementById('map'), options);
+
       }
 
       /* A utility object for simple event handlilng */
@@ -164,8 +160,6 @@ function createMarker(latlng, name, html) {
 	 marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng);
   });
 
-
-
         
     </script>
   </head>
@@ -178,6 +172,24 @@ function createMarker(latlng, name, html) {
     <div id="msg_in">  <textarea id="recipient" rows="3" cols="40">Recipients:</textarea> 
 <textarea id="sms_msg" rows="3" cols="80">Enter your SMS message</textarea>
 <div id="sub_button"><a href="#" class="classname">SEND SMS</a></div></div>
+       
+       <script>
+        setInterval(update_pins, 1000);
+        function update_pins() {
+            $.getJSON('/locations', function(data) {
+                console.log(data.length);
+                for (i in data) {
+                    var dic = data[i];
+                    console.log(dic);
+                    var lat_long = dic['loc'];
+                    var condi = dic['condi'];
+                    var gmap_lat_long = new google.maps.LatLng(parseFloat(lat_long[0]),
+                                                               parseFloat(lat_long[1]));
+                    var mkr = createMarker(gmap_lat_long, map, condi);
+                } 
+            });
+        }
+        </script>
      </body>
 </html>
 
