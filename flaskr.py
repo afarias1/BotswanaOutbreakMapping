@@ -67,4 +67,4 @@ def show_entries():
 if __name__ == '__main__':
     con, cur = setup_db()
     port = int(os.environ.get("PORT", 33507))
-    app.run(host='localhost', port=port)
+    app.run(debug=True,port=port)
