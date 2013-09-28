@@ -9,6 +9,9 @@
       body { height: 80%; margin: 30px; padding: 30px }
       #map { height: 80% }
       #img { vertical-align:text-bottom; float:left; margin:0 5px 0 0; }
+      #sms_msg {  margin:10px 0 0 0px;   }
+      #recipient {  margin:10px 0 0 60px;  }
+      #sub_button { margin:0 0 0 60px;   }
     </style>
 
 
@@ -108,7 +111,7 @@ function createMarker(latlng, name, html) {
           scaleControlOptions: {
             position: google.maps.ControlPosition.BOTTOM_LEFT
           },
-          streetViewControl: false,
+          streetViewControl: true,
           streetViewControlOptions: {
             position: google.maps.ControlPosition.LEFT_TOP
           }
@@ -169,10 +172,12 @@ function createMarker(latlng, name, html) {
   <body> 
     <p><h1>Botswana Outbreak Monitor</h1></p>
 
-<p><img id="img" src ="{{ url_for('static', filename='PHIALOGOFINAL.png') }}" width="60" height="60"/><h4>Mapping Health Reports in Botswana</h4></p>
+<p><img id="img" src ="{{ url_for('static', filename='PHIALOGOFINAL.png') }}" width="60" height="60"/>
+<h4>Mapping Disease Outbreaks in Botswana</h4></p>
         <div id="map"></div>
-    <div id="msg_in">  <textarea rows="3" cols="20">Recipients:</textarea> <textarea rows="3" cols="20">Enter your SMS message</textarea>
-<a href="#" class="classname">SUBMIT</a></div>
+    <div id="msg_in">  <textarea id="recipient" rows="3" cols="40">Recipients:</textarea> 
+<textarea id="sms_msg" rows="3" cols="80">Enter your SMS message</textarea>
+<div id="sub_button"><a href="#" class="classname">SEND SMS</a></div></div>
      </body>
 </html>
 
